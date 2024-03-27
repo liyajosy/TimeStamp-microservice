@@ -27,7 +27,11 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date", function (req, res) {
-  getUnixAndUTCDate(req.params.date, (err, data)=>{
+    getUnixAndUTCDate(req.params.date, (err, data)=>{
+  
+    if(err){
+     return res.json(err);
+    }
     res.json(data);
   });  
 
@@ -35,8 +39,7 @@ app.get("/api/:date", function (req, res) {
 
 app.get("/api", function (req, res) {
   const now =  Date.now();
-  console.log(now)
-  getUnixAndUTCDate(now, (err, data)=>{
+    getUnixAndUTCDate(now, (err, data)=>{
     res.json(data);
   });  
 

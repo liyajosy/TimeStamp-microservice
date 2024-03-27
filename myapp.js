@@ -1,28 +1,27 @@
 
 
-const getUnixAndUTCDate =(stringDate, done)=>{
+const getUnixAndUTCDate =(date_string, done)=>{
     
-    let date  = new Date(stringDate);
- 
-   if(isNaN(date.valueOf())){
-    const time = parseInt(stringDate)
-    if(!isNaN(time)){
+    let date  = new Date(date_string);
+    
+    
+   if(!isNaN(date.valueOf())){
+         return  done(null,  {unix: date.getTime(), utc: date.toUTCString()});
+   } else{
+    const time = parseInt(date_string)
+    if(isNaN(time)){
+        
+        return done( {error:"Invalid Date"}, null);
+    }else{        
         date  = new Date(time);
-        //date.setTime(stringDate);
-    }else{
-        done(null, {error:"Invalid Date"});
-    }  
-   
-    
-   }
+        console.log("2 toUTCString():"+date.toUTCString());
   
-   
-    const days =["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-    const months = ["Jan","Feb", "Mar","Apr","May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-   // const date  = new Date(unix)
-    const utc = days[date.getUTCDay()] + ", " +date.getUTCDate() +" " + months[date.getUTCMonth()] +" " +date.getUTCFullYear()
-                + " "+ addZeroToTime(date.getUTCHours())+ ":"+addZeroToTime( date.getUTCMinutes()) + ":"+addZeroToTime( date.getUTCSeconds()) + " " + "GMT";
-    done(null,  {unix: date.getTime(), utc: utc});
+        return done(null,  {unix: date.getTime(), utc: date.toUTCString()});
+    } 
+   }
+ 
+  
+  
    
 }
 function addZeroToTime( t){
