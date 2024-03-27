@@ -5,6 +5,8 @@
 var express = require('express');
 var app = express();
 
+const getUnixAndUTCDate = require('./myapp.js').getUnixAndUTCDate ;
+
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC 
 var cors = require('cors');
@@ -22,6 +24,22 @@ app.get("/", function (req, res) {
 // your first API endpoint... 
 app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
+});
+
+app.get("/api/:date", function (req, res) {
+  getUnixAndUTCDate(req.params.date, (err, data)=>{
+    res.json(data);
+  });  
+
+});
+
+app.get("/api", function (req, res) {
+  const now =  Date.now();
+  console.log(now)
+  getUnixAndUTCDate(now, (err, data)=>{
+    res.json(data);
+  });  
+
 });
 
 
